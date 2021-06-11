@@ -8,7 +8,6 @@ public class MapGenerator : MonoBehaviour {
     [SerializeField] private Array2DGameObject _map = new Array2DGameObject(8,8);
     [SerializeField] private Vector2 _offset;
     
-    // Start is called before the first frame update
     void Start()
     {
         Transform mapHolder = SpawnMapHolder();
@@ -26,9 +25,12 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    public GameObject GetCell(int x, int y)
+    public Cell GetCell(int x, int y)
     {
-        return _map.GetValue(x, y);
+        GameObject cellObject = _map.GetValue(x, y);
+        if(cellObject)
+            return _map.GetValue(x, y).GetComponent<Cell>();
+        return null;
     }
 
     private Transform SpawnMapHolder()
