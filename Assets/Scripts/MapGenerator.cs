@@ -26,6 +26,11 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
+    public GameObject GetCell(int x, int y)
+    {
+        return _map.GetValue(x, y);
+    }
+
     private Transform SpawnMapHolder()
     {
         const string holderName = "Map";
