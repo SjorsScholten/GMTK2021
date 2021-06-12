@@ -17,7 +17,7 @@ public class UnitController : MonoBehaviour {
 	}
 
 	public void Initialize(Cell[] path) {
-		UnitSimulation unitSimulation = new UnitSimulation(_transform);
+		UnitSimulation unitSimulation = new UnitSimulation(_transform, path[0].Center);
 		_unitLogic = new UnitLogic(unitSimulation, unit, path);
 		_unitLogic.onGoalReached += GoalReached;
 		gameObject.SetActive(true);

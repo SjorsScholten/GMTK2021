@@ -5,8 +5,9 @@ public class UnitSimulation {
 	private Transform _transform;
 	private Vector3 _velocity = Vector3.zero;
 	
-	public UnitSimulation(Transform transform) {
+	public UnitSimulation(Transform transform, Vector3 startPosition) {
 		_transform = transform;
+		_transform.position = startPosition;
 	}
 	
 	public void HandleMove(Vector3 targetPos, float speed, float accelerationMax) {
@@ -20,6 +21,7 @@ public class UnitSimulation {
 	}
 
 	public void HandleRotation() {
+		if(_velocity == Vector3.zero) return;
 		_transform.rotation = Quaternion.LookRotation(_velocity);
 	}
 

@@ -8,20 +8,28 @@ using Random = UnityEngine.Random;
 public class UnitSpawner : MonoBehaviour {
 	[SerializeField] private UnitController[] _spawnableUnits;
 	[SerializeField] private MapGenerator _map;
+	[SerializeField, Range(1, 10)] private int _initialSpawn = 1;
 	public UnityEvent onGoalReached;
 
 	private void Start() {
-		SpawnUnit();
+		for (int i = 0; i < _initialSpawn; i++) {
+			SpawnUnit();
+		}
 	}
 
 	[ContextMenu("spawn")]
 	public void SpawnUnit() {
 		UnitController unit = Instantiate(_spawnableUnits[Random.Range(0, _spawnableUnits.Length)], transform);
-		Cell startCell = _map.GetCell(0, 7);
-		Cell endCell = _map.GetCell(7, 0);
-		Cell[] path = Pathfinding.GetPath(startCell, endCell);
+		Cell[] path = GeneratePath();
 		unit.Initialize(path);
 		unit.onGoalReached += onGoalReached.Invoke;
+	}
+
+	private Cell[] GeneratePath() {
+		Cell[] spawns = _map.GetSpawnPoints();
+		Cell startCell = spawns[Random.Range(0, spawns.Length)];
+		Cell endCell = spawns[Random.Range(0, spawns.Length)];
+		return Pathfinding.GetPath(startCell, endCell);
 	}
 }
 

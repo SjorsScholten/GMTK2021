@@ -86,4 +86,18 @@ public class MapGenerator : MonoBehaviour {
         if(neighbour && neighbour.walkable)
             neighbours.Add(neighbour);
     }
+
+    public Cell[] GetSpawnPoints() {
+        List<Cell> spawns = new List<Cell>();
+        for (int x = 0; x < _map.sizeX; x++) {
+            for (int y = 0; y < _map.sizeY; y++) {
+                GameObject c = _mapGrid.GetCellObject(x, y);
+                if(!c) continue;
+                Road r = c.GetComponent<Road>();
+                if (r) spawns.Add(r);
+            }
+        }
+
+        return spawns.ToArray();
+    }
 }

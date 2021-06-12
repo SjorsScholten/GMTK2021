@@ -20,6 +20,8 @@ public class Cell : MonoBehaviour, INode, IRoad {
 
     private Transform _transform;
     private Vector3 _center = Vector3.zero;
+    private int _slots = 2;
+    public bool canPass = true;
 
     private void Awake() {
         _transform = GetComponent<Transform>();
@@ -91,6 +93,20 @@ public class Cell : MonoBehaviour, INode, IRoad {
     }
     
     public bool CanPass() {
+        return canPass && _slots > 0;
+    }
+
+    public bool Enter() {
+        if (_slots > 0) {
+            _slots--;
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool Exit() {
+        _slots++;
         return true;
     }
 }
