@@ -19,9 +19,9 @@ public class MapGenerator : MonoBehaviour {
 
     public Cell GetCell(int x, int y)
     {
-        GameObject cellObject = _mapGrid.GetCellObject(x, y);
-        if(cellObject)
-            return cellObject.GetComponent<Cell>();
+        Cell cell = _mapGrid.GetCellObject(x, y);
+        if (cell)
+            return cell;
         return null;
     }
     
@@ -45,7 +45,7 @@ public class MapGenerator : MonoBehaviour {
                 
                 cell.SetXY(x, y);
                 cellObject.name = cell.ToString();
-                _mapGrid.AddToGrid(x, y, cellObject);
+                _mapGrid.AddToGrid(x, y, cell);
             }
         }
     }
@@ -96,13 +96,18 @@ public class MapGenerator : MonoBehaviour {
         List<Cell> spawns = new List<Cell>();
         for (int x = 0; x < _map.sizeX; x++) {
             for (int y = 0; y < _map.sizeY; y++) {
-                GameObject c = _mapGrid.GetCellObject(x, y);
+                Cell c = _mapGrid.GetCellObject(x, y);
                 if(!c) continue;
-                Road r = c.GetComponent<Road>();
+                Road r = c as Road;
                 if (r) spawns.Add(r);
             }
         }
 
         return spawns.ToArray();
+    }
+
+    public Cell GetPoint(Cell start = null)
+    {
+        return _mapGrid.GetPoint(start);
     }
 }

@@ -21,21 +21,22 @@ public class Crossing : Cell, IRoad {
 	{
 		if (!towards)
 			return false;
+		
 		if (!towards.gridX.Equals(gridX))
 		{
-			if (canCross.CanBeCrossedHorizontal)
+			if (canCross.HasHorizontal)
 			{
-				return towards.CanPass();
+				return canCross.CanBeCrossedHorizontal && towards.CanPass();
 			}
-			return false;
+			return true;
 		}
 		else
 		{
-			if (canCross.CanBeCrossedVertical)
+			if (canCross.HasVertical)
 			{
-				return towards.CanPass();
+				return canCross.CanBeCrossedVertical && towards.CanPass();
 			}
-			return false;
+			return true;
 		}
 	}
 }

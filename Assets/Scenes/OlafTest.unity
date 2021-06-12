@@ -576,8 +576,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1130981565}
         m_TargetAssemblyTypeName: ChangeButton, Assembly-CSharp
-        m_MethodName: ChangeButtons
-        m_Mode: 6
+        m_MethodName: Disable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -588,8 +588,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 10355837}
         m_TargetAssemblyTypeName: ChangeButton, Assembly-CSharp
-        m_MethodName: ChangeButtons
-        m_Mode: 6
+        m_MethodName: Disable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -600,8 +600,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 214203618}
         m_TargetAssemblyTypeName: ChangeButton, Assembly-CSharp
-        m_MethodName: ChangeButtons
-        m_Mode: 6
+        m_MethodName: Disable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -860,8 +860,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1130981565}
         m_TargetAssemblyTypeName: ChangeButton, Assembly-CSharp
-        m_MethodName: ChangeButtons
-        m_Mode: 6
+        m_MethodName: Enable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -872,8 +872,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 10355837}
         m_TargetAssemblyTypeName: ChangeButton, Assembly-CSharp
-        m_MethodName: ChangeButtons
-        m_Mode: 6
+        m_MethodName: Enable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -884,8 +884,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 214203618}
         m_TargetAssemblyTypeName: ChangeButton, Assembly-CSharp
-        m_MethodName: ChangeButtons
-        m_Mode: 6
+        m_MethodName: Enable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1133,6 +1133,7 @@ MonoBehaviour:
   _spawnableUnits:
   - {fileID: 6780705157165300031, guid: 78499fcccdcc8b44cb4566774ae8559e, type: 3}
   _map: {fileID: 1169301622}
+  _initialSpawn: 1
   onGoalReached:
     m_PersistentCalls:
       m_Calls:
@@ -1516,8 +1517,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 10355837}
         m_TargetAssemblyTypeName: ChangeButton, Assembly-CSharp
-        m_MethodName: ChangeButtons
-        m_Mode: 6
+        m_MethodName: Enable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1733,6 +1734,7 @@ MonoBehaviour:
   _horizontalButton: {fileID: 10355837}
   _verticalButton: {fileID: 214203618}
   _allButton: {fileID: 1130981565}
+  _map: {fileID: 0}
 --- !u!4 &1305708992
 Transform:
   m_ObjectHideFlags: 0
@@ -2060,8 +2062,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 214203618}
         m_TargetAssemblyTypeName: ChangeButton, Assembly-CSharp
-        m_MethodName: ChangeButtons
-        m_Mode: 6
+        m_MethodName: Disable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2205,8 +2207,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 214203618}
         m_TargetAssemblyTypeName: ChangeButton, Assembly-CSharp
-        m_MethodName: ChangeButtons
-        m_Mode: 6
+        m_MethodName: Enable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3072,11 +3074,11 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 0
+        m_CallState: 2
       - m_Target: {fileID: 10355837}
         m_TargetAssemblyTypeName: ChangeButton, Assembly-CSharp
-        m_MethodName: ChangeButtons
-        m_Mode: 6
+        m_MethodName: Disable
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

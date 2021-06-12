@@ -83,7 +83,7 @@ public class Cell : MonoBehaviour, INode, IRoad {
         }
     }
     
-    public bool CanPass() {
+    public virtual bool CanPass(Cell towards = null) {
         return walkable && canPass && _slots > 0;
     }
 

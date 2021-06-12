@@ -10,6 +10,7 @@ public class SelectCrossing : MonoBehaviour {
     [SerializeField] private ChangeButton _horizontalButton;
     [SerializeField] private ChangeButton _verticalButton;
     [SerializeField] private ChangeButton _allButton;
+    [SerializeField] private MapGenerator _map;
     
     private Crossing _selected;
 
@@ -29,21 +30,30 @@ public class SelectCrossing : MonoBehaviour {
                 if (_selected.canCross.HasHorizontal)
                 {
                     _horizontalButton.gameObject.SetActive(true);
-                    _horizontalButton.ChangeButtons(_selected.canCross.CanBeCrossedHorizontal);
+                    if(_selected.canCross.CanBeCrossedHorizontal)
+                        _horizontalButton.Enable();
+                    else
+                        _horizontalButton.Disable();
                 }
 
                 if (_selected.canCross.HasVertical)
                 {
                     _verticalButton.gameObject.SetActive(true);
-                    _verticalButton.ChangeButtons(_selected.canCross.CanBeCrossedVertical);
+                    if(_selected.canCross.CanBeCrossedVertical)
+                        _verticalButton.Enable();
+                    else
+                        _verticalButton.Disable();
                 }
 
                 if (_selected.canCross.HasHorizontal && _selected.canCross.HasVertical)
                 {
                     _allButton.gameObject.SetActive(true);
                     bool enable = (_selected.canCross.CanBeCrossedVertical == _selected.canCross.CanBeCrossedHorizontal) &&
-                                  _selected.canCross.CanBeCrossedVertical == false;
-                    _allButton.ChangeButtons(!enable);
+                                  _selected.canCross.CanBeCrossedVertical == true;
+                    if(enable)
+                        _allButton.Enable();
+                    else
+                        _allButton.Disable();
                 }
             }
         }

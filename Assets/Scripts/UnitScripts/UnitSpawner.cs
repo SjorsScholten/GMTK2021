@@ -26,9 +26,13 @@ public class UnitSpawner : MonoBehaviour {
 	}
 
 	private Cell[] GeneratePath() {
-		Cell[] spawns = _map.GetSpawnPoints();
+		/*Cell[] spawns = _map.GetSpawnPoints();
 		Cell startCell = spawns[Random.Range(0, spawns.Length)];
-		Cell endCell = spawns[Random.Range(0, spawns.Length)];
+		Random.seed = System.DateTime.Now.Millisecond;
+		Cell endCell = spawns[Random.Range(0, spawns.Length)];*/
+
+		Cell startCell = _map.GetPoint();
+		Cell endCell = _map.GetPoint(startCell);
 		return Pathfinding.GetPath(startCell, endCell);
 	}
 }
