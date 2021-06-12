@@ -37,7 +37,6 @@ public class MapGrid {
                 return cell;
             }
         }
-
         return null;
     }
 }
