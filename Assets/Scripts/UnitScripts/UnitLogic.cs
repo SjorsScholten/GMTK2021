@@ -5,8 +5,9 @@ using System.Linq;
 using UnitScripts;
 using UnityEngine;
 
+[Serializable]
 public class UnitLogic {
-	private readonly UnitSimulation _unitSimulation;
+	private UnitSimulation _unitSimulation;
 	private readonly Unit _unit;
 	
 	private Cell[] _path = null;

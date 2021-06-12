@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+[Serializable]
 public class UnitSimulation {
 	private Transform _transform;
 	private Vector3 _velocity = Vector3.zero;
@@ -22,7 +23,7 @@ public class UnitSimulation {
 	}
 
 	public void HandleRotation() {
-		if(_velocity == Vector3.zero) return;
+		if(_velocity.magnitude <= 0.01f) return;
 		_transform.rotation = Quaternion.LookRotation(_velocity);
 	}
 
