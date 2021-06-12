@@ -11,7 +11,9 @@ public class SelectCrossing : MonoBehaviour {
     [SerializeField] private ChangeButton _verticalButton;
     [SerializeField] private ChangeButton _allButton;
     [SerializeField] private MapGenerator _map;
-    
+    [SerializeField] private GameObject _selectedPrefab;
+
+    private GameObject _selectedObject;
     private Crossing _selected;
 
     private void OnFire(InputValue value)
@@ -26,6 +28,7 @@ public class SelectCrossing : MonoBehaviour {
             if (!_selected)
                 return;
             
+            ShowSelect();
             EnableAllButtons(false);
 
             if (_selected.canCross.HasHorizontal)
@@ -56,13 +59,24 @@ public class SelectCrossing : MonoBehaviour {
                 else
                     _allButton.Disable();
             }
-
         }
         else
         {
             _selected = null;
             EnableAllButtons(false);
+            _selectedObject.SetActive(false);
         }
+    }
+
+    private void ShowSelect()
+    {
+        if (!_selectedObject)
+            _selectedObject = Instantiate(_selectedPrefab);
+
+        _selectedObject.transform.localScale = new Vector3(_selected.transform.localScale.x * 10,
+            _selectedObject.transform.localScale.y, _selected.transform.localScale.z * 10);
+        _selectedObject.transform.position = _selected.transform.position + new Vector3(0, 0.02f, 0);
+        _selectedObject.SetActive(true);
     }
 
     private void EnableAllButtons(bool enable)

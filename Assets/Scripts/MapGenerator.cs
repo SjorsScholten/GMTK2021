@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
 
-    [SerializeField] private List<GameObject> prefabs;
-    [SerializeField] private Array2DInt _map = new Array2DInt(8,8);
+    [SerializeField] private List<GameObject> _prefabs;
+    [SerializeField] private Map _mapObject;
     [SerializeField] private Vector2 _offset;
+    
     private MapGrid _mapGrid;
-
+    private Array2DInt _map;
+    
     void Awake()
     {
+        _map = _mapObject._map;
         _mapGrid = new MapGrid();
         SpawnMap();
         AddNeighbours();
@@ -33,9 +36,9 @@ public class MapGenerator : MonoBehaviour {
             for (int x = 0; x < (_map.sizeX); x++)
             {
                 int index = _map.GetValue(x, y);
-                if (index > prefabs.Count)
+                if (index > _prefabs.Count)
                     index = 0;
-                GameObject road = prefabs[index];
+                GameObject road = _prefabs[index];
                 Vector3 position = new Vector3(x * _offset.x, 0f, y * _offset.y);
                 GameObject cellObject = Instantiate(road, position, Quaternion.Euler(Vector3.zero), mapHolder.transform);
                 Cell cell = cellObject.GetComponent<Cell>();
