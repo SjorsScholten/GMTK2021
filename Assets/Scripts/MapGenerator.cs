@@ -7,18 +7,18 @@ public class MapGenerator : MonoBehaviour {
     
     [SerializeField] private Array2DGameObject _map = new Array2DGameObject(8,8);
     [SerializeField] private Vector2 _offset;
-    private Grid _grid;
+    private MapGrid _mapGrid;
 
     void Start()
     {
-        _grid = new Grid();
+        _mapGrid = new MapGrid();
         SpawnMap();
         AddNeighbours();
     }
 
     public Cell GetCell(int x, int y)
     {
-        GameObject cellObject = _grid.GetCellObject(x, y);
+        GameObject cellObject = _mapGrid.GetCellObject(x, y);
         if(cellObject)
             return cellObject.GetComponent<Cell>();
         return null;
@@ -40,7 +40,7 @@ public class MapGenerator : MonoBehaviour {
                 Cell cell = cellObject.GetComponent<Cell>();
                 cell.SetXY(x, y);
                 cellObject.name = cell.ToString();
-                _grid.AddToGrid(x, y, cellObject);
+                _mapGrid.AddToGrid(x, y, cellObject);
             }
         }
     }

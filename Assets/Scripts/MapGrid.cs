@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid {
+public class MapGrid {
     private Dictionary<Vector2Int, GameObject> _grid = new Dictionary<Vector2Int, GameObject>();
 
     public void AddToGrid(int x, int y, GameObject gameObject)
