@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2619359735952907149}
   - component: {fileID: 806659493106561600}
   - component: {fileID: 1324343291251185222}
+  - component: {fileID: 6479352784689683940}
   m_Layer: 0
   m_Name: Crossing
   m_TagString: Untagged
@@ -96,3 +97,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &6479352784689683940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8025503374024881685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3dccfb10380f52469ee4117d531cdc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkable: 1
+  gridX: 0
+  gridY: 0
