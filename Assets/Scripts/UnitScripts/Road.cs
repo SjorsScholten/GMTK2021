@@ -32,7 +32,7 @@ namespace UnitScripts {
 			_transform = GetComponent<Transform>();
 		}
 		
-		public bool CanPass() {
+		public bool CanPass(Cell towards = null) {
 			return true;
 		}
 	}
