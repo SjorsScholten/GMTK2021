@@ -11,7 +11,8 @@ public class UnitSimulation {
 	}
 	
 	public void HandleMove(Vector3 targetPos, float speed, float accelerationMax) {
-		Vector3 desiredVelocity = Vector3.ClampMagnitude(targetPos - _transform.position, 1) * speed;
+		Vector3 targetOffset = targetPos + _transform.TransformDirection(new Vector3(0.8f, 0f, 0f));
+		Vector3 desiredVelocity = Vector3.ClampMagnitude(targetOffset - _transform.position, 1) * speed;
 		float maxSpeedChange = accelerationMax * Time.deltaTime;
 		
 		_velocity.x = Mathf.MoveTowards(_velocity.x, desiredVelocity.x, maxSpeedChange);

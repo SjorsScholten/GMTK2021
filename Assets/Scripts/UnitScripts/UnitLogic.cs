@@ -50,15 +50,10 @@ public class UnitLogic {
 			_futureCell = null;
 			return true;
 		}
+		
 		_futureCell = _path[_pathIndex + 1];
+		if (_path.Count() - 1 >= _pathIndex + 2) return _futureCell.CanPass(_path[_pathIndex + 2]);
 
-		if (_path.Count() - 1 >= _pathIndex + 2)
-		{
-			Debug.Log($"Can pass {_futureCell} towards {_path[_pathIndex + 2]} is {_futureCell.CanPass(_path[_pathIndex + 2])}");
-			return _futureCell.CanPass(_path[_pathIndex + 2]);
-		}
-
-		Debug.Log($"Can pass {_futureCell} is {_futureCell.CanPass()}");
 		return _futureCell.CanPass();
 	}
 }
