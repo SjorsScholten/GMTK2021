@@ -402,7 +402,9 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-  _offset: {x: 1, y: 1}
+  _offset: {x: -1, y: 1}
+  start: {fileID: 0}
+  goal: {fileID: 0}
 --- !u!4 &1169301623
 Transform:
   m_ObjectHideFlags: 0
