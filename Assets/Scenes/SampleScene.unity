@@ -315,7 +315,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1169301623}
   - component: {fileID: 1169301622}
-  - component: {fileID: 1169301624}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -403,8 +402,9 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-  _offset: {x: 1, y: 1}
-  path: []
+  _offset: {x: -1, y: 1}
+  start: {fileID: 0}
+  goal: {fileID: 0}
 --- !u!4 &1169301623
 Transform:
   m_ObjectHideFlags: 0
@@ -419,21 +419,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1169301624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1169301621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb1fe351b4024ee42a5701434be1efce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seeker: {fileID: 0}
-  target: {fileID: 0}
-  _map: {fileID: 1169301622}
 --- !u!1 &1246818049
 GameObject:
   m_ObjectHideFlags: 0

@@ -109,9 +109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3dccfb10380f52469ee4117d531cdc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkable: 0
+  walkable: 1
   gridX: 0
   gridY: 0
-  gCost: 1
-  hCost: 0
-  parent: {fileID: 0}

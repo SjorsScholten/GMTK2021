@@ -7,8 +7,24 @@ public class MapGenerator : MonoBehaviour {
     
     [SerializeField] private Array2DGameObject _map = new Array2DGameObject(8,8);
     [SerializeField] private Vector2 _offset;
-    
+    private Grid _grid;
+
     void Start()
+    {
+        _grid = new Grid();
+        SpawnMap();
+        AddNeighbours();
+    }
+
+    public Cell GetCell(int x, int y)
+    {
+        GameObject cellObject = _grid.GetCellObject(x, y);
+        if(cellObject)
+            return cellObject.GetComponent<Cell>();
+        return null;
+    }
+    
+    private void SpawnMap()
     {
         Transform mapHolder = SpawnMapHolder();
         for (int y = 0; y < _map.sizeY; y++)
@@ -20,17 +36,13 @@ public class MapGenerator : MonoBehaviour {
                     continue;
                 
                 Vector3 position = new Vector3(x * _offset.x, 0f, y * _offset.y);
-                Instantiate(road, position, Quaternion.Euler(Vector3.zero), mapHolder.transform);
+                GameObject cellObject = Instantiate(road, position, Quaternion.Euler(Vector3.zero), mapHolder.transform);
+                Cell cell = cellObject.GetComponent<Cell>();
+                cell.SetXY(x, y);
+                cellObject.name = cell.ToString();
+                _grid.AddToGrid(x, y, cellObject);
             }
         }
-    }
-
-    public Cell GetCell(int x, int y)
-    {
-        GameObject cellObject = _map.GetValue(x, y);
-        if(cellObject)
-            return _map.GetValue(x, y).GetComponent<Cell>();
-        return null;
     }
 
     private Transform SpawnMapHolder()
@@ -39,5 +51,39 @@ public class MapGenerator : MonoBehaviour {
         Transform folder = transform.Find(holderName);
         if (folder) DestroyImmediate(folder.gameObject);
         return new GameObject(holderName).transform;
+    }
+
+    private void AddNeighbours()
+    {
+        for (int x = 0; x < _map.sizeY; x++)
+        {
+            for (int y = 0; y < _map.sizeX; y++)
+            {
+                Cell cell = GetCell(x, y);
+                if (!cell)
+                    continue;
+                
+                Vector2Int up = new Vector2Int(cell.gridX, cell.gridY + 1);
+                Vector2Int down = new Vector2Int(cell.gridX, cell.gridY - 1);
+                Vector2Int left = new Vector2Int(cell.gridX - 1, cell.gridY);
+                Vector2Int right = new Vector2Int(cell.gridX + 1, cell.gridY);
+                List<Cell> neighbours = new List<Cell>();
+                AddNeighbours(ref neighbours, up);
+                AddNeighbours(ref neighbours, down);
+                AddNeighbours(ref neighbours, left);
+                AddNeighbours(ref neighbours, right);
+                cell.AddNeighbours(neighbours);
+            }
+        }
+    }
+
+    private void AddNeighbours(ref List<Cell> neighbours, Vector2Int index)
+    {
+        if (index.x < 0 || index.x >= _map.sizeX || index.y < 0 || index.y >= _map.sizeY)
+            return;
+
+        Cell neighbour = GetCell(index.x, index.y);
+        if(neighbour && neighbour.walkable)
+            neighbours.Add(neighbour);
     }
 }
