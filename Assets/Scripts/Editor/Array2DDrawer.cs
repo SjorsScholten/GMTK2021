@@ -48,7 +48,7 @@ public abstract class Array2DDrawer : PropertyDrawer {
 		int yOffset = 0;
 		for (int y = 0; y < sizeY.intValue; y++)
 		{
-			int xOffset = 0;
+			int xOffset = -400;
 			for (int x = 0; x < sizeX.intValue; x++)
 			{
 				Rect rect = new Rect(position.x + xOffset, position.y + yOffset, ElementWidth, ElementHeight);

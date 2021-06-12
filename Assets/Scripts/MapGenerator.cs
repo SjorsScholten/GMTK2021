@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
-    
+
+    [SerializeField] private GameObject filler;
     [SerializeField] private Array2DGameObject _map = new Array2DGameObject(8,8);
     [SerializeField] private Vector2 _offset;
     private MapGrid _mapGrid;
@@ -32,12 +33,16 @@ public class MapGenerator : MonoBehaviour {
             for (int x = 0; x < (_map.sizeX); x++)
             {
                 GameObject road = _map.GetValue(x, y);
-                if(!road)
-                    continue;
+                if (!road)
+                    road = filler;
                 
                 Vector3 position = new Vector3(x * _offset.x, 0f, y * _offset.y);
                 GameObject cellObject = Instantiate(road, position, Quaternion.Euler(Vector3.zero), mapHolder.transform);
                 Cell cell = cellObject.GetComponent<Cell>();
+                
+                if (!cell)
+                    continue;
+                
                 cell.SetXY(x, y);
                 cellObject.name = cell.ToString();
                 _mapGrid.AddToGrid(x, y, cellObject);

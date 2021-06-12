@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnitScripts;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -16,7 +13,7 @@ public class Cell : MonoBehaviour, INode, IRoad {
 
     public IEnumerable<INode> Neighbours => _neighbours;
     
-    private List<Cell> _neighbours = new List<Cell>();
+    protected List<Cell> _neighbours = new List<Cell>();
 
     private Transform _transform;
     private Vector3 _center = Vector3.zero;
@@ -53,18 +50,12 @@ public class Cell : MonoBehaviour, INode, IRoad {
     public void AddNeighbours(List<Cell> neighbours)
     {
         _neighbours.AddRange(neighbours);
-    }
 
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        Handles.Label(transform.position + new Vector3(0,0.3f,0), ToString());
-    }
-#endif
-
-    public override string ToString()
-    {
-        return $"{gridX}, {gridY}";
+        if (this is Crossing && _neighbours.Count > 0)
+        {
+            Crossing crossing = this as Crossing;
+            crossing.SetCanBeCrossed();
+        }
     }
 
     public Vector3[] CornerVertices {
@@ -90,7 +81,24 @@ public class Cell : MonoBehaviour, INode, IRoad {
         }
     }
     
-    public bool CanPass() {
+    public virtual bool CanPass(Cell towards = null) {
+        if (!walkable)
+            return false;
+
+        //TODO return if there is space on this cell for the car
         return true;
     }
+    
+    public override string ToString()
+    {
+        return $"{gridX}, {gridY}";
+    }
+    
+    
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Handles.Label(transform.position + new Vector3(0,0.3f,0), ToString());
+    }
+#endif
 }
