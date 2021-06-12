@@ -27,7 +27,7 @@ public class MapGrid {
     public Cell GetPoint(Cell start = null)
     {
         List<Cell> cellsInGrid = _grid.Values.ToList();
-        cellsInGrid.RemoveAll(c => c.Neighbours.Count() > 1 || c.Equals(start));
+        cellsInGrid.RemoveAll(c => c.Neighbours.Count() > 1 || !c.Neighbours.Any() || c.Equals(start));
         if (cellsInGrid.Count > 0)
         {
             while (true)
