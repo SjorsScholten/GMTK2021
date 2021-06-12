@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 public abstract class Array2DDrawer : PropertyDrawer {
+	
 	protected abstract int ElementWidth { get; }
 
 	protected virtual int ElementHeight
@@ -48,7 +49,7 @@ public abstract class Array2DDrawer : PropertyDrawer {
 		int yOffset = 0;
 		for (int y = 0; y < sizeY.intValue; y++)
 		{
-			int xOffset = -400;
+			int xOffset = 0;
 			for (int x = 0; x < sizeX.intValue; x++)
 			{
 				Rect rect = new Rect(position.x + xOffset, position.y + yOffset, ElementWidth, ElementHeight);
@@ -56,13 +57,12 @@ public abstract class Array2DDrawer : PropertyDrawer {
 				int index = XYToIndex(sizeX, sizeY, x, y);
 				SerializedProperty prop = arrayProp.GetArrayElementAtIndex(index);
 				EditorGUI.PropertyField(rect, prop, GUIContent.none);
-				xOffset += ElementWidth;
+				xOffset += ElementWidth + 5;
 			}
 
 			yOffset += ElementHeight;
 		}
-
-
+		
 		EditorGUI.EndProperty();
 	}
 
@@ -86,6 +86,17 @@ public class Array2DGameObjectDrawer : Array2DDrawer
 	{
 		// The Array2DDrawer class below does all the hard stuff; here we can just say how wide each element should be.
 		// Try changing this number to see what happens to the drawer
-		get { return 100; } 
+		get { return 60; } 
+	}
+}
+
+[CustomPropertyDrawer(typeof(Array2DInt))] // This ties the Array2DDrawer to the Array2DBool
+public class Array2DIntDrawer : Array2DDrawer
+{
+	protected override int ElementWidth
+	{
+		// The Array2DDrawer class below does all the hard stuff; here we can just say how wide each element should be.
+		// Try changing this number to see what happens to the drawer
+		get { return 25; } 
 	}
 }

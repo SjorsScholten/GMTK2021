@@ -23,39 +23,40 @@ public class SelectCrossing : MonoBehaviour {
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hitInfo))
         {
             _selected = hitInfo.collider.GetComponent<Crossing>();
-            if (_selected)
+            if (!_selected)
+                return;
+            
+            EnableAllButtons(false);
+
+            if (_selected.canCross.HasHorizontal)
             {
-                EnableAllButtons(false);
-                
-                if (_selected.canCross.HasHorizontal)
-                {
-                    _horizontalButton.gameObject.SetActive(true);
-                    if(_selected.canCross.CanBeCrossedHorizontal)
-                        _horizontalButton.Enable();
-                    else
-                        _horizontalButton.Disable();
-                }
-
-                if (_selected.canCross.HasVertical)
-                {
-                    _verticalButton.gameObject.SetActive(true);
-                    if(_selected.canCross.CanBeCrossedVertical)
-                        _verticalButton.Enable();
-                    else
-                        _verticalButton.Disable();
-                }
-
-                if (_selected.canCross.HasHorizontal && _selected.canCross.HasVertical)
-                {
-                    _allButton.gameObject.SetActive(true);
-                    bool enable = (_selected.canCross.CanBeCrossedVertical == _selected.canCross.CanBeCrossedHorizontal) &&
-                                  _selected.canCross.CanBeCrossedVertical == true;
-                    if(enable)
-                        _allButton.Enable();
-                    else
-                        _allButton.Disable();
-                }
+                _horizontalButton.gameObject.SetActive(true);
+                if (_selected.canCross.CanBeCrossedHorizontal)
+                    _horizontalButton.Enable();
+                else
+                    _horizontalButton.Disable();
             }
+
+            if (_selected.canCross.HasVertical)
+            {
+                _verticalButton.gameObject.SetActive(true);
+                if (_selected.canCross.CanBeCrossedVertical)
+                    _verticalButton.Enable();
+                else
+                    _verticalButton.Disable();
+            }
+
+            if (_selected.canCross.HasHorizontal && _selected.canCross.HasVertical)
+            {
+                _allButton.gameObject.SetActive(true);
+                bool enable = (_selected.canCross.CanBeCrossedVertical == _selected.canCross.CanBeCrossedHorizontal) &&
+                              _selected.canCross.CanBeCrossedVertical == true;
+                if (enable)
+                    _allButton.Enable();
+                else
+                    _allButton.Disable();
+            }
+
         }
         else
         {

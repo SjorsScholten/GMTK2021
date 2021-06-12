@@ -39,3 +39,8 @@ public class SerializableArray2D<T>
 public class Array2DGameObject : SerializableArray2D<GameObject> {
     public Array2DGameObject(int sizeX, int sizeY) : base(sizeX, sizeY) {}
 }
+
+[Serializable]
+public class Array2DInt : SerializableArray2D<int> {
+    public Array2DInt(int sizeX, int sizeY) : base(sizeX, sizeY) {}
+}
