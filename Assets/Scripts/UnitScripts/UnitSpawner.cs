@@ -12,9 +12,7 @@ public class UnitSpawner : MonoBehaviour {
 	public UnityEvent onGoalReached;
 
 	private void Start() {
-		for (int i = 0; i < _initialSpawn; i++) {
-			SpawnUnit();
-		}
+		for (int i = 0; i < _initialSpawn; i++) SpawnUnit();
 	}
 
 	[ContextMenu("spawn")]
@@ -26,11 +24,6 @@ public class UnitSpawner : MonoBehaviour {
 	}
 
 	private Cell[] GeneratePath() {
-		/*Cell[] spawns = _map.GetSpawnPoints();
-		Cell startCell = spawns[Random.Range(0, spawns.Length)];
-		Random.seed = System.DateTime.Now.Millisecond;
-		Cell endCell = spawns[Random.Range(0, spawns.Length)];*/
-
 		Cell startCell = _map.GetPoint();
 		Cell endCell = _map.GetPoint(startCell);
 		return Pathfinding.GetPath(startCell, endCell);
