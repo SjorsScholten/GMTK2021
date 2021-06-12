@@ -25,6 +25,6 @@ public class UnitSimulation {
 
 	public bool HasReachedPosition(Vector3 targetPos) {
 		float distance = Vector3.Distance(_transform.position, targetPos);
-		return distance <= 0.5f;
+		return distance <= 1f;
 	}
 }

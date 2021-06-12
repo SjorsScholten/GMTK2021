@@ -8,13 +8,13 @@ public class UnitLogic {
 	private readonly UnitSimulation _unitSimulation;
 	private readonly Unit _unit;
 	
-	private IRoad[] _path;
+	private Cell[] _path;
 	private int _pathIndex;
 	private Vector3 _targetPosition;
 	
 	public event Action onGoalReached;
 
-	public UnitLogic(UnitSimulation unitSimulation, Unit data, IRoad[] path) {
+	public UnitLogic(UnitSimulation unitSimulation, Unit data, Cell[] path) {
 		_unitSimulation = unitSimulation;
 		_unit = data;
 		_path = path;

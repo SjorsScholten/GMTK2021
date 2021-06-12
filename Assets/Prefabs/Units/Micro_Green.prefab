@@ -45,10 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit:
-    speed: 6
-    acceleration: 4
-    prefab: {fileID: 0}
-  GFXHolder: {fileID: 6780705158577808740}
+    speed: 8
+    acceleration: 5
 --- !u!1 &6780705158577808741
 GameObject:
   m_ObjectHideFlags: 0

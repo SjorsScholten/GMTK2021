@@ -16,7 +16,7 @@ public class UnitController : MonoBehaviour {
 		_transform = GetComponent<Transform>();
 	}
 
-	public void Initialize(IRoad[] path) {
+	public void Initialize(Cell[] path) {
 		UnitSimulation unitSimulation = new UnitSimulation(_transform);
 		_unitLogic = new UnitLogic(unitSimulation, unit, path);
 		_unitLogic.onGoalReached += GoalReached;

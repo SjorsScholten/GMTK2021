@@ -7,8 +7,7 @@ using Random = UnityEngine.Random;
 
 public class UnitSpawner : MonoBehaviour {
 	[SerializeField] private UnitController[] _spawnableUnits;
-	[SerializeField] private DebugRoad _debugRoad;
-
+	[SerializeField] private MapGenerator _map;
 	public UnityEvent onGoalReached;
 
 	private void Start() {
@@ -18,7 +17,9 @@ public class UnitSpawner : MonoBehaviour {
 	[ContextMenu("spawn")]
 	public void SpawnUnit() {
 		UnitController unit = Instantiate(_spawnableUnits[Random.Range(0, _spawnableUnits.Length)], transform);
-		IRoad[] path = _debugRoad.GetPath(Vector2.zero);
+		Cell startCell = _map.GetCell(0, 7);
+		Cell endCell = _map.GetCell(7, 0);
+		Cell[] path = Pathfinding.GetPath(startCell, endCell);
 		unit.Initialize(path);
 		unit.onGoalReached += onGoalReached.Invoke;
 	}

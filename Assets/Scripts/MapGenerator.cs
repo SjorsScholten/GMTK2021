@@ -9,7 +9,7 @@ public class MapGenerator : MonoBehaviour {
     [SerializeField] private Vector2 _offset;
     private MapGrid _mapGrid;
 
-    void Start()
+    void Awake()
     {
         _mapGrid = new MapGrid();
         SpawnMap();

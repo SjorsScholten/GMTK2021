@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnitScripts;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-public class Cell : MonoBehaviour, INode {
+public class Cell : MonoBehaviour, INode, IRoad {
     
     public bool walkable;
     public int gridX;
@@ -16,6 +17,13 @@ public class Cell : MonoBehaviour, INode {
     public IEnumerable<INode> Neighbours => _neighbours;
     
     private List<Cell> _neighbours = new List<Cell>();
+
+    private Transform _transform;
+    private Vector3 _center = Vector3.zero;
+
+    private void Awake() {
+        _transform = GetComponent<Transform>();
+    }
 
     public void SetXY(int x, int y)
     {
@@ -57,5 +65,32 @@ public class Cell : MonoBehaviour, INode {
     public override string ToString()
     {
         return $"{gridX}, {gridY}";
+    }
+
+    public Vector3[] CornerVertices {
+        get {
+            Vector3[] corners = new Vector3[4];
+            Vector3 position = _transform.position;
+            corners[0] = position + (Vector3.left + Vector3.up) / 2;
+            corners[1] = position + (Vector3.right + Vector3.up) / 2;
+            corners[2] = position + (Vector3.right + Vector3.down) / 2;
+            corners[3] = position + (Vector3.left + Vector3.down) / 2;
+            return corners;
+        }
+    }
+    
+    public Vector3 Center {
+        get {
+            if (_center != Vector3.zero) return _center;
+				
+            foreach (Vector3 vertice in CornerVertices) _center += vertice;
+            _center /= CornerVertices.Length;
+				
+            return _center;
+        }
+    }
+    
+    public bool CanPass() {
+        return true;
     }
 }
