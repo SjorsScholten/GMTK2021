@@ -64,8 +64,7 @@ public class SelectCrossing : MonoBehaviour {
         {
             _selected = null;
             EnableAllButtons(false);
-            if(_selectedObject)
-                _selectedObject.SetActive(false);
+            _selectedObject.SetActive(false);
         }
     }
 
@@ -90,13 +89,13 @@ public class SelectCrossing : MonoBehaviour {
     public void ChangeHorizontal(bool enable)
     {
         if (_selected)
-            _selected.SetHorizontal(enable);
+            _selected.canCross.CanBeCrossedHorizontal = enable;
     }
     
     public void ChangeVertical(bool enable)
     {
         if (_selected)
-            _selected.SetVertical(enable);
+            _selected.canCross.CanBeCrossedVertical = enable;
     }
 
     public void ChangeAll(bool enable)
