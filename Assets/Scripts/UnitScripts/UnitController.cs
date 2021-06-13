@@ -8,6 +8,7 @@ public class UnitController : MonoBehaviour {
 	
 	private UnitLogic _unitLogic;
 	private Transform _transform;
+	private bool _delete;
 
 	public event Action onGoalReached;
 
@@ -16,7 +17,9 @@ public class UnitController : MonoBehaviour {
 		_transform = GetComponent<Transform>();
 	}
 
-	public void Initialize(Cell[] path) {
+	public void Initialize(Cell[] path, bool delete = true)
+	{
+		_delete = delete;
 		UnitSimulation unitSimulation = new UnitSimulation(_transform, path[0].Center);
 		_unitLogic = new UnitLogic(unitSimulation, unit, path);
 		_unitLogic.onGoalReached += GoalReached;
@@ -29,7 +32,9 @@ public class UnitController : MonoBehaviour {
 
 	private void GoalReached() {
 		onGoalReached?.Invoke();
-		GameObject.Destroy(gameObject);
+		if(_delete)
+			Destroy(gameObject);
+		else
+			Destroy(this);
 	}
-	
 }
