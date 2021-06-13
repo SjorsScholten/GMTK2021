@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapGrid {
     private Dictionary<Vector2Int, Cell> _grid = new Dictionary<Vector2Int, Cell>();
@@ -28,15 +29,25 @@ public class MapGrid {
     {
         List<Cell> cellsInGrid = _grid.Values.ToList();
         cellsInGrid.RemoveAll(c => c.Neighbours.Count() > 1 || !c.Neighbours.Any() || c.Equals(start));
-        if (cellsInGrid.Count > 0)
+        return cellsInGrid.Count > 0 ? cellsInGrid[Random.Range(0, cellsInGrid.Count)] : null;
+    }
+    
+    public Cell[] GetFurthestPath(Cell start)
+    {
+        List<Cell> cellsInGrid = _grid.Values.ToList();
+        cellsInGrid.RemoveAll(c => c.Neighbours.Count() > 1 || !c.Neighbours.Any() || c.Equals(start));
+        if (cellsInGrid.Count <= 0)
+            return null;
+
+        Cell[] furthestPath = null;
+        int pathCount = 0;
+
+        foreach (Cell[] path in cellsInGrid.Select(cell => Pathfinding.GetPath(start, cell)).Where(path => path.Count() > pathCount))
         {
-            while (true)
-            {
-                Cell cell = cellsInGrid[Random.Range(0, cellsInGrid.Count)];
-                if (cell.Equals(start)) continue;
-                return cell;
-            }
+            pathCount = path.Count();
+            furthestPath = path;
         }
-        return null;
+        return furthestPath;
+
     }
 }

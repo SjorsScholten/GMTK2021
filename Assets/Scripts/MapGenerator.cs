@@ -1,26 +1,55 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
-
-    [SerializeField] private List<GameObject> _prefabs;
     [SerializeField] private Map _mapObject;
     [SerializeField] private Vector2 _offset;
     
     private MapGrid _mapGrid;
     private Array2DInt _map;
-    
+    private List<GameObject> _prefabs;
+    private Vector2Int _goalIndex;
+    private Cell _goal;
+
     void Awake()
     {
         _map = _mapObject._map;
+        _prefabs = _mapObject.prefabs;
         _mapGrid = new MapGrid();
         SpawnMap();
         AddNeighbours();
     }
 
-    public Cell GetCell(int x, int y)
+    public Cell GetGoal()
+    {
+        List<Vector2Int> directions = new List<Vector2Int>();
+        directions.Add(new Vector2Int(_goalIndex.x - 1, _goalIndex.y));
+        directions.Add(new Vector2Int(_goalIndex.x + 1, _goalIndex.y));
+
+        foreach (Cell goalCell in directions.Select(direction => GetCell(direction.x, direction.y)).Where(goalCell => goalCell))
+        {
+            _goal = goalCell;
+            Debug.Log($"Goal cell is: {_goal}");
+            return _goal;
+        }
+        Debug.LogError("No goal cell found");
+        return null;
+    }
+
+    public Cell GetPoint(Cell start = null)
+    {
+        return _mapGrid.GetPoint(start);
+    }
+
+    public Cell[] GetFurthestPath(Cell start)
+    {
+        return _mapGrid.GetFurthestPath(start);
+    }
+
+    private Cell GetCell(int x, int y)
     {
         Cell cell = _mapGrid.GetCellObject(x, y);
         if (cell)
@@ -38,7 +67,11 @@ public class MapGenerator : MonoBehaviour {
                 int index = _map.GetValue(x, y);
                 if (index > _prefabs.Count)
                     index = 0;
+                
                 GameObject road = _prefabs[index];
+                if (road.Equals(_mapObject.goal))
+                    _goalIndex = new Vector2Int(x, y);
+                
                 Vector3 position = new Vector3(x * _offset.x, 0f, y * _offset.y);
                 GameObject cellObject = Instantiate(road, position, Quaternion.Euler(Vector3.zero), mapHolder.transform);
                 Cell cell = cellObject.GetComponent<Cell>();
@@ -93,24 +126,5 @@ public class MapGenerator : MonoBehaviour {
         Cell neighbour = GetCell(index.x, index.y);
         if(neighbour && neighbour.walkable)
             neighbours.Add(neighbour);
-    }
-
-    public Cell[] GetSpawnPoints() {
-        List<Cell> spawns = new List<Cell>();
-        for (int x = 0; x < _map.sizeX; x++) {
-            for (int y = 0; y < _map.sizeY; y++) {
-                Cell c = _mapGrid.GetCellObject(x, y);
-                if(!c) continue;
-                Road r = c as Road;
-                if (r) spawns.Add(r);
-            }
-        }
-
-        return spawns.ToArray();
-    }
-
-    public Cell GetPoint(Cell start = null)
-    {
-        return _mapGrid.GetPoint(start);
     }
 }
