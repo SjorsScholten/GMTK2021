@@ -6,8 +6,9 @@ using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class ScoreManager : MonoBehaviour {
-    [SerializeField] private TextMeshProUGUI textField;
-    [SerializeField] private AudioClip pointsIncreasedAudio;
+
+    [SerializeField] private List<TextMeshProUGUI> _scoreFields;
+    [SerializeField] private AudioClip _pointsIncreasedAudio;
 
     private int _points = 0;
     private AudioSource _audioSource = null;
@@ -23,11 +24,19 @@ public class ScoreManager : MonoBehaviour {
     public void AddPoint() {
         _points++;
         UpdateText();
-        PlayClip(pointsIncreasedAudio);
+    }
+    
+    public void GoalReached() {
+        _points += 50;
+        UpdateText();
+        PlayClip(_pointsIncreasedAudio);
     }
 
     private void UpdateText() {
-        textField.text = $"Score: {_points}";
+        foreach (TextMeshProUGUI scoreField in _scoreFields)
+        {
+            scoreField.text = $"Score: {_points}";
+        }
     }
 
     private void PlayClip(AudioClip clip) {
