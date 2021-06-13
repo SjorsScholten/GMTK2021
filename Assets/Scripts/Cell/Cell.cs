@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnitScripts;
 using UnityEngine;
@@ -5,8 +6,9 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-public class Cell : MonoBehaviour, INode, IRoad {
-    
+[Serializable]
+public class Cell : MonoBehaviour, INode {
+    public MapGrid parentGrid;
     public bool walkable;
     public int gridX;
     public int gridY;
@@ -16,11 +18,10 @@ public class Cell : MonoBehaviour, INode, IRoad {
     protected List<Cell> _neighbours = new List<Cell>();
 
     private Transform _transform;
-    private Vector3 _center = Vector3.zero;
-    private int _slots = 2;
-    public bool canPass = true;
 
-    private void Awake() {
+    public Vector3 GridCoord => new Vector3(gridX, 0, gridY);
+
+    protected virtual void Awake() {
         _transform = GetComponent<Transform>();
     }
 
@@ -60,47 +61,21 @@ public class Cell : MonoBehaviour, INode, IRoad {
         }
     }
 
-    public Vector3[] CornerVertices {
-        get {
-            Vector3[] corners = new Vector3[4];
-            Vector3 position = _transform.position;
-            corners[0] = position + (Vector3.left + Vector3.up) / 2;
-            corners[1] = position + (Vector3.right + Vector3.up) / 2;
-            corners[2] = position + (Vector3.right + Vector3.down) / 2;
-            corners[3] = position + (Vector3.left + Vector3.down) / 2;
-            return corners;
-        }
-    }
-    
-    public Vector3 Center {
-        get {
-            if (_center != Vector3.zero) return _center;
-				
-            foreach (Vector3 vertice in CornerVertices) _center += vertice;
-            _center /= CornerVertices.Length;
-				
-            return _center;
-        }
-    }
-    
-    public virtual bool CanPass(Cell towards = null) {
-        return walkable && canPass && _slots > 0;
+    public bool HasNeighborInDirection(Vector3 direction) {
+        if (direction == Vector3.zero) return false;
+        int x = Mathf.RoundToInt(gridX + direction.x);
+        int y = Mathf.RoundToInt(gridY + direction.z);
+        return parentGrid.GetCellObject(x, y); 
     }
 
-    public bool Enter() {
-        if (_slots > 0) {
-            _slots--;
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool Exit() {
-        _slots++;
-        return true;
+    public virtual Vector3 GetPosition(Vector3 headingDirection = new Vector3()) {
+        return _transform.position;
     }
     
+    public virtual bool CanPass(Unit unit) {
+        return walkable;
+    }
+
     public override string ToString()
     {
         return $"{gridX}, {gridY}";

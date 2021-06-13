@@ -12,8 +12,6 @@ public class UnitLogic {
 	
 	private Cell[] _path = null;
 	private int _pathIndex = 0;
-	private Cell _targetCell = null;
-	private Cell _futureCell = null;
 	
 	public event Action onGoalReached;
 
@@ -22,39 +20,43 @@ public class UnitLogic {
 		_unit = data;
 		_path = path;
 		
-		UpdateTargetCell();
+		Initialize();
+	}
+
+	private void Initialize() {
+		_pathIndex = 0;
+		SetTarget(_pathIndex);
 	}
 	
 	public void Move() {
-		_unitSimulation.HandleMove(_targetCell.Center, _unit.speed, _unit.acceleration);
+		_unitSimulation.HandleMove(_unit.targetCell.GetPosition(), _unit.speed, _unit.acceleration);
 		_unitSimulation.HandleRotation();
 
-		if (!_unitSimulation.HasReachedPosition(_targetCell.Center)) return;
-
-		if (!CheckFutureCell()) return;
-		_pathIndex++;
-		UpdateTargetCell();
-	}
-	
-	private void UpdateTargetCell() {
-		if (_targetCell) _targetCell.Exit();
-		if (_pathIndex > _path.Length - 1) {
-			onGoalReached?.Invoke();
-			return;
-		}
-		_targetCell = _path[_pathIndex];
-		_targetCell.Enter();
+		CheckIfTargetReached();
 	}
 
-	private bool CheckFutureCell() {
-		if (_pathIndex + 1 > _path.Length - 1) {
-			_futureCell = null;
-			return true;
-		}
-		
-		_futureCell = _path[_pathIndex + 1];
-		if (_path.Count() - 1 >= _pathIndex + 2) return _futureCell.CanPass(_path[_pathIndex + 2]);
+	private void CheckIfTargetReached() {
+		Vector3 targetPosition = _unit.targetCell.GetPosition();
+		if (_unitSimulation.HasReachedPosition(targetPosition)) {
+			if (_pathIndex > _path.Length - 1) {
+				onGoalReached?.Invoke();
+				return;
+			}
 
-		return _futureCell.CanPass();
+			Cell futureCell = _unit.futureCell;
+			if(!futureCell) return;
+			if (futureCell.CanPass(_unit)) {
+				_pathIndex++;
+				SetTarget(_pathIndex);
+			}
+		}
+	}
+
+	private void SetTarget(int index) {
+		if (_pathIndex > _path.Length - 1) return;
+		_unit.targetCell = _path[index];
+				
+		if(index + 1 >= _path.Length) return;
+		_unit.futureCell = _path[index + 1];
 	}
 }

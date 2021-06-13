@@ -13,6 +13,7 @@ public class MapGrid {
             return;
         
         _grid.Add(index, cell);
+        cell.parentGrid = this;
     }
 
     public Cell GetCellObject(int x, int y)

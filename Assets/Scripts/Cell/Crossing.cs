@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnitScripts;
 using UnityEngine;
 
-public class Crossing : Cell, IRoad {
+[Serializable]
+public class Crossing : Cell {
 	public CrossingBooleans canCross;
 
 	public void SetCanBeCrossed()
@@ -17,16 +19,17 @@ public class Crossing : Cell, IRoad {
 		canCross.CanBeCrossedVertical = canCross.HasVertical;
 	}
 
-	public override bool CanPass(Cell towards = null)
-	{
-		if (!towards)
-			return false;
+	public override bool CanPass(Unit unit) {
+		if(unit == null)return false;
+		Cell towards = unit.futureCell;
+		
+		if (!towards) return false;
 		
 		if (!towards.gridX.Equals(gridX))
 		{
 			if (canCross.HasHorizontal)
 			{
-				return canCross.CanBeCrossedHorizontal && towards.CanPass();
+				return canCross.CanBeCrossedHorizontal && towards.CanPass(null);
 			}
 			return true;
 		}
@@ -34,7 +37,7 @@ public class Crossing : Cell, IRoad {
 		{
 			if (canCross.HasVertical)
 			{
-				return canCross.CanBeCrossedVertical && towards.CanPass();
+				return canCross.CanBeCrossedVertical && towards.CanPass(null);
 			}
 			return true;
 		}

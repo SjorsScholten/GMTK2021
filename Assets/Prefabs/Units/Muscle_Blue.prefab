@@ -46,7 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit:
     speed: 5
-    acceleration: 100
+    acceleration: 1000
+    targetCell: {fileID: 0}
+    futureCell: {fileID: 0}
+    slot:
+      position: {x: 0, y: 0, z: 0}
+      occupied: 0
 --- !u!1 &6780705158577808741
 GameObject:
   m_ObjectHideFlags: 0
